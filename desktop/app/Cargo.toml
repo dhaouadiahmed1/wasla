@@ -25,7 +25,7 @@ dirs.workspace = true
 hostname.workspace = true
 material-colors.workspace = true
 # Inflates Google's platform-tools zip (Settings > Install on a phone).
-miniz_oxide = "0.8"
+miniz_oxide = "0.9"
 wasla-adb.workspace = true
 wasla-core.workspace = true
 wasla-vcam.workspace = true
