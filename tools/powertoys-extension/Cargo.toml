@@ -1,0 +1,17 @@
+[package]
+name = "wasla-ptrun"
+description = "PowerToys Run & Command Palette extension helper for Wasla"
+version = "0.0.1"
+edition = "2024"
+license = "GPL-3.0-or-later"
+publish = false
+
+[workspace]
+
+[[bin]]
+name = "wasla-ptrun"
+path = "src/main.rs"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
