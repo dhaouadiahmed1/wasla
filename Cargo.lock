@@ -2432,152 +2432,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "wasla-adb"
-version = "1.0.0"
-dependencies = [
- "thiserror 2.0.21",
- "tokio",
- "tokio-util",
- "tracing",
-]
-
-[[package]]
-name = "wasla-cli"
-version = "1.0.0"
-dependencies = [
- "anyhow",
- "clap",
- "dirs",
- "hostname",
- "libc",
- "wasla-core",
- "qrcode",
- "serde",
- "serde_json",
- "tempfile",
- "tokio",
- "tracing",
- "tracing-subscriber",
- "windows",
-]
-
-[[package]]
-name = "wasla-core"
-version = "1.0.0"
-dependencies = [
- "blake3",
- "bytes",
- "data-encoding",
- "iroh",
- "iroh-mdns-address-lookup",
- "iroh-relay",
- "libc",
- "material-colors",
- "n0-future",
- "wasla-adb",
- "wasla-protocol",
- "netdev 0.46.3",
- "noq-proto",
- "rand",
- "ring",
- "rusqlite",
- "rustls",
- "rustls-pki-types",
- "serde",
- "serde_json",
- "sha2",
- "socket2",
- "tempfile",
- "thiserror 2.0.21",
- "tokio",
- "tokio-rustls",
- "tokio-util",
- "tracing",
- "tracing-subscriber",
- "url",
- "windows",
-]
-
-[[package]]
-name = "wasla-desktop"
-version = "1.0.0"
-dependencies = [
- "anyhow",
- "blake3",
- "cc",
- "cxx",
- "cxx-qt",
- "cxx-qt-build",
- "cxx-qt-lib",
- "data-encoding",
- "dirs",
- "embed-resource",
- "hostname",
- "libc",
- "material-colors",
- "miniz_oxide",
- "wasla-adb",
- "wasla-core",
- "wasla-vcam",
- "pkg-config",
- "qrcode",
- "serde",
- "serde_json",
- "sha1_smol",
- "sha2",
- "tempfile",
- "tokio",
- "tracing",
- "tracing-subscriber",
- "wayland-client",
- "wayland-protocols",
- "windows",
- "windows-collections",
- "windows-core",
- "zbus",
-]
-
-[[package]]
-name = "wasla-ffi"
-version = "1.0.0"
-dependencies = [
- "jni-sys 0.4.1",
- "wasla-core",
- "paranoid-android",
- "thiserror 2.0.21",
- "tokio",
- "tracing",
- "tracing-subscriber",
- "uniffi",
-]
-
-[[package]]
-name = "wasla-protocol"
-version = "1.0.0"
-dependencies = [
- "ciborium",
- "data-encoding",
- "hmac",
- "serde",
- "serde_bytes",
- "sha2",
- "thiserror 2.0.21",
- "tokio",
- "url",
-]
-
-[[package]]
-name = "wasla-vcam"
-version = "1.0.0"
-dependencies = [
- "ab_glyph",
- "embed-resource",
- "libc",
- "windows",
- "windows-core",
-]
-
-[[package]]
 name = "netdev"
 version = "0.45.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2618,6 +2472,28 @@ dependencies = [
  "libc",
  "mac-addr",
  "ndk-context",
+ "netlink-packet-core 0.9.0",
+ "netlink-packet-route 0.33.0",
+ "netlink-sys 0.9.0",
+ "objc2-core-foundation",
+ "objc2-system-configuration",
+ "once_cell",
+ "plist",
+ "windows-sys 0.61.2",
+]
+
+[[package]]
+name = "netdev"
+version = "0.47.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "98a4d13f8061600697d721c5fd45262aba533a7d4a7670e7c64fd02d68e4a9fb"
+dependencies = [
+ "block2",
+ "dispatch2",
+ "dlopen2",
+ "ipnet",
+ "libc",
+ "mac-addr",
  "netlink-packet-core 0.9.0",
  "netlink-packet-route 0.33.0",
  "netlink-sys 0.9.0",
@@ -4725,6 +4601,152 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b67efb37e106e55ce722a510d6b5f9c17f083e5fc79afc2badeb12cc313d9487"
 dependencies = [
  "wit-bindgen",
+]
+
+[[package]]
+name = "wasla-adb"
+version = "1.0.0"
+dependencies = [
+ "thiserror 2.0.21",
+ "tokio",
+ "tokio-util",
+ "tracing",
+]
+
+[[package]]
+name = "wasla-cli"
+version = "1.0.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "dirs",
+ "hostname",
+ "libc",
+ "qrcode",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "tokio",
+ "tracing",
+ "tracing-subscriber",
+ "wasla-core",
+ "windows",
+]
+
+[[package]]
+name = "wasla-core"
+version = "1.0.0"
+dependencies = [
+ "blake3",
+ "bytes",
+ "data-encoding",
+ "iroh",
+ "iroh-mdns-address-lookup",
+ "iroh-relay",
+ "libc",
+ "material-colors",
+ "n0-future",
+ "netdev 0.47.0",
+ "noq-proto",
+ "rand",
+ "ring",
+ "rusqlite",
+ "rustls",
+ "rustls-pki-types",
+ "serde",
+ "serde_json",
+ "sha2",
+ "socket2",
+ "tempfile",
+ "thiserror 2.0.21",
+ "tokio",
+ "tokio-rustls",
+ "tokio-util",
+ "tracing",
+ "tracing-subscriber",
+ "url",
+ "wasla-adb",
+ "wasla-protocol",
+ "windows",
+]
+
+[[package]]
+name = "wasla-desktop"
+version = "1.0.0"
+dependencies = [
+ "anyhow",
+ "blake3",
+ "cc",
+ "cxx",
+ "cxx-qt",
+ "cxx-qt-build",
+ "cxx-qt-lib",
+ "data-encoding",
+ "dirs",
+ "embed-resource",
+ "hostname",
+ "libc",
+ "material-colors",
+ "miniz_oxide",
+ "pkg-config",
+ "qrcode",
+ "serde",
+ "serde_json",
+ "sha1_smol",
+ "sha2",
+ "tempfile",
+ "tokio",
+ "tracing",
+ "tracing-subscriber",
+ "wasla-adb",
+ "wasla-core",
+ "wasla-vcam",
+ "wayland-client",
+ "wayland-protocols",
+ "windows",
+ "windows-collections",
+ "windows-core",
+ "zbus",
+]
+
+[[package]]
+name = "wasla-ffi"
+version = "1.0.0"
+dependencies = [
+ "jni-sys 0.4.1",
+ "paranoid-android",
+ "thiserror 2.0.21",
+ "tokio",
+ "tracing",
+ "tracing-subscriber",
+ "uniffi",
+ "wasla-core",
+]
+
+[[package]]
+name = "wasla-protocol"
+version = "1.0.0"
+dependencies = [
+ "ciborium",
+ "data-encoding",
+ "hmac",
+ "serde",
+ "serde_bytes",
+ "sha2",
+ "thiserror 2.0.21",
+ "tokio",
+ "url",
+]
+
+[[package]]
+name = "wasla-vcam"
+version = "1.0.0"
+dependencies = [
+ "ab_glyph",
+ "embed-resource",
+ "libc",
+ "windows",
+ "windows-core",
 ]
 
 [[package]]
