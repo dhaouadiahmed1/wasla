@@ -12,6 +12,8 @@ use std::{
 
 use bytes::Bytes;
 use iroh::endpoint::{ReadError, RecvStream, SendStream, VarInt, WriteError};
+use tokio::io::AsyncWriteExt;
+use tokio_util::sync::CancellationToken;
 pub use wasla_protocol::messages::{RecordingMarker, files::RECORDER};
 use wasla_protocol::{
     DeviceId, Envelope, ErrorCode,
@@ -21,8 +23,6 @@ use wasla_protocol::{
     },
     read_frame, write_frame,
 };
-use tokio::io::AsyncWriteExt;
-use tokio_util::sync::CancellationToken;
 
 use crate::{Error, Result, events::NodeEvent, node::Shared, session::Session};
 

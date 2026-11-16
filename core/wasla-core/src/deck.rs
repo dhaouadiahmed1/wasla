@@ -13,6 +13,7 @@ use std::{
     sync::{Arc, Mutex},
 };
 
+use serde::{Deserialize, Serialize};
 pub use wasla_protocol::messages::{
     AudioOutputDevice, DeckLayout, DeckPage, DeckPress, DeckState, DeckTile, KeyMod, PcAudioSet,
     deck::{
@@ -25,7 +26,6 @@ use wasla_protocol::{
     DeviceId, Envelope, ErrorCode,
     messages::{remote, types},
 };
-use serde::{Deserialize, Serialize};
 
 use crate::{
     Error, Result,

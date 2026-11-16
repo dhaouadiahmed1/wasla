@@ -409,9 +409,7 @@ fn feed_update(found: &feed::Feed, current: &str) -> Option<Update> {
 /// a file name under %TEMP%: a plain name only, never a path.
 fn is_installer_name(name: &str, suffix: &str) -> bool {
     name.ends_with(suffix)
-        && (name.starts_with("Wasla-")
-            || name.starts_with("wasla_")
-            || name.starts_with("wasla-"))
+        && (name.starts_with("Wasla-") || name.starts_with("wasla_") || name.starts_with("wasla-"))
         && feed::is_plain_name(name)
 }
 
@@ -1380,8 +1378,8 @@ mod tests {
             assets: vec![
                 Asset {
                     name: "Wasla-9.0.0-x64-setup.exe".into(),
-                    browser_download_url: "https://github.com/dhaouadiahmed1/wasla/releases/download/v9/setup"
-                        .into(),
+                    browser_download_url:
+                        "https://github.com/dhaouadiahmed1/wasla/releases/download/v9/setup".into(),
                 },
                 Asset {
                     name: "Wasla-9.0.0-arm64-setup.exe".into(),
@@ -1451,11 +1449,8 @@ mod tests {
 
     #[test]
     fn the_relauncher_waits_for_another_version_then_opens_the_app() {
-        let script = relauncher_script(
-            r"C:\Program Files\Wasla\wasla-desktop.exe",
-            "0.2.0",
-            "--minimized --updated",
-        );
+        let script =
+            relauncher_script(r"C:\Program Files\Wasla\wasla-desktop.exe", "0.2.0", "--minimized --updated");
         // Any other version counts: the task installs the latest, not the one asked for.
         assert!(script.contains("$installed -and $installed -ne '0.2.0'"));
         assert!(script.contains("Wasla-*-setup"));

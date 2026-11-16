@@ -15,11 +15,11 @@ use std::{
     },
 };
 
+use serde_json::{Value, json};
 use wasla_core::{
     CallCommand, CallLogEntry, CallSims, CallState, Contact, DeviceId, Error, FeatureState, LinkState,
     NodeEvent,
 };
-use serde_json::{Value, json};
 
 use crate::{
     bridge::app::{describe, show_message},

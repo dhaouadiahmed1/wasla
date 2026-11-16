@@ -10,8 +10,8 @@ use std::{path::Path, pin::Pin};
 
 use cxx_qt::{CxxQtType, Threading};
 use cxx_qt_lib::{QByteArray, QHash, QHashPair_i32_QByteArray, QList, QModelIndex, QString, QVariant};
-use wasla_core::{DeviceId, Error, LinkState, TimelineEntry, TimelineKind, TimelineQuery};
 use serde_json::json;
+use wasla_core::{DeviceId, Error, LinkState, TimelineEntry, TimelineKind, TimelineQuery};
 
 use super::{Edit, diff};
 use crate::{

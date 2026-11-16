@@ -278,10 +278,7 @@ mod imp {
 
     pub fn on_event(event: &wasla_core::NodeEvent) {
         match event {
-            wasla_core::NodeEvent::LinkChanged {
-                device,
-                link: wasla_core::LinkState::Offline { .. },
-            }
+            wasla_core::NodeEvent::LinkChanged { device, link: wasla_core::LinkState::Offline { .. } }
             | wasla_core::NodeEvent::DeviceRemoved(device) => {
                 stop_for(device);
             }

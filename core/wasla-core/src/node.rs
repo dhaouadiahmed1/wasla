@@ -17,6 +17,8 @@ use iroh::{
     protocol::{AcceptError, ProtocolHandler, Router},
 };
 use iroh_mdns_address_lookup::{DiscoveryEvent, MdnsAddressLookup};
+use tokio::sync::{Notify, broadcast};
+use tokio_util::sync::CancellationToken;
 use wasla_protocol::{
     ALPN_PAIR, ALPN_SESSION, DeviceId, Envelope, ErrorCode,
     messages::{
@@ -25,8 +27,6 @@ use wasla_protocol::{
     },
     pairing::PairingUri,
 };
-use tokio::sync::{Notify, broadcast};
-use tokio_util::sync::CancellationToken;
 
 use crate::{
     Error, NodeConfig, Platform, Result,

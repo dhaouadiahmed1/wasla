@@ -7,8 +7,8 @@
 //! and come back as a list for the UI.
 
 use crate::i18n::tr;
-use wasla_core::{ConnectionPath, LinkState};
 use serde::Serialize;
+use wasla_core::{ConnectionPath, LinkState};
 
 use crate::{core_host, win::doctor as windows_checks};
 

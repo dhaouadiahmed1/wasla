@@ -26,7 +26,6 @@ use std::{
 };
 
 use data_encoding::HEXLOWER;
-use wasla_core::{DeviceId, LinkState, TaskNotify};
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 use tokio::{
@@ -34,6 +33,7 @@ use tokio::{
     net::{TcpListener, TcpStream},
     sync::oneshot,
 };
+use wasla_core::{DeviceId, LinkState, TaskNotify};
 
 use crate::settings::{DEFAULT_LOCAL_API_PORT, Settings};
 

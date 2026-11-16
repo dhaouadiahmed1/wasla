@@ -9,9 +9,9 @@ use std::{
     process::ExitCode,
 };
 
-use wasla_core::LinkState;
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
+use wasla_core::LinkState;
 
 use crate::{core_host, launch::Request, win::single_instance};
 

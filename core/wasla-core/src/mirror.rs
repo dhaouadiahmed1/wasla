@@ -22,6 +22,7 @@ use std::sync::{
 use std::time::{Duration, Instant};
 
 use iroh::endpoint::{RecvStream, SendStream, VarInt};
+use tokio::sync::mpsc;
 use wasla_protocol::{
     DeviceId, Envelope, ErrorCode, PacketKind,
     messages::{
@@ -30,7 +31,6 @@ use wasla_protocol::{
     },
     read_video_packet, video_packet_header, write_frame,
 };
-use tokio::sync::mpsc;
 
 use crate::{Error, Result, events::NodeEvent, node::Shared, session::Session};
 

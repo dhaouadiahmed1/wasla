@@ -15,11 +15,11 @@ use std::{
     time::{Duration, Instant},
 };
 
+use serde_json::{Value, json};
 use wasla_core::{
     DeviceId, Direction, Error, FeatureState, LinkState, NodeEvent, Photo, PhotoAlbum, PhotoItem, PhotoThumb,
     Transfer, TransferState,
 };
-use serde_json::{Value, json};
 
 use crate::{
     bridge::app::{describe, show_message},
@@ -1266,9 +1266,7 @@ pub fn open_latest_photo(device: DeviceId) {
         });
 
     let online = core_host::host().hub.read(|s| {
-        s.devices
-            .iter()
-            .any(|d| d.id == device && matches!(d.link, wasla_core::LinkState::Online { .. }))
+        s.devices.iter().any(|d| d.id == device && matches!(d.link, wasla_core::LinkState::Online { .. }))
     });
     if !online {
         if let Some(path) = timeline_fallback {

@@ -12,11 +12,11 @@ use std::{
     sync::Mutex,
 };
 
+use serde_json::{Value, json};
 use wasla_core::{
     ChatMessageRecord, ChatThreadRecord, DeviceId, Error, LinkState, NodeEvent, SmsAttachment, SmsMessage,
     SmsPart, SmsThread,
 };
-use serde_json::{Value, json};
 
 use crate::{core_host, state::Changes};
 

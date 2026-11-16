@@ -33,13 +33,13 @@ use std::{
     time::{Duration, Instant},
 };
 
-use wasla_protocol::DeviceId;
 use serde::{Deserialize, Serialize};
 use tokio::{
     io::{AsyncReadExt, AsyncWriteExt},
     net::{TcpListener, TcpStream, UdpSocket},
 };
 use tokio_util::sync::CancellationToken;
+use wasla_protocol::DeviceId;
 
 use crate::{Error, Result, node::Shared};
 

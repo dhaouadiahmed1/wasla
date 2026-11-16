@@ -12,8 +12,8 @@
 use crate::i18n::tr;
 use std::{collections::HashSet, path::PathBuf, sync::Mutex, time::Instant};
 
-use wasla_core::{ClipboardItemKind, DeviceId, LinkState, PhoneToggleValue, TimelineKind};
 use serde_json::{Value, json};
+use wasla_core::{ClipboardItemKind, DeviceId, LinkState, PhoneToggleValue, TimelineKind};
 
 use crate::{
     bridge::app::{describe, show_message},
@@ -706,11 +706,7 @@ fn build_candidates() -> Vec<PaletteCandidate> {
             } else {
                 tr!("CommandPalette", "Use phone as webcam")
             },
-            subtitle: tr!(
-                "CommandPalette",
-                "Stream %1's camera into the Wasla virtual webcam",
-                dev_name
-            ),
+            subtitle: tr!("CommandPalette", "Stream %1's camera into the Wasla virtual webcam", dev_name),
             category: "Actions".into(),
             icon: "video".into(),
             badge: dev_name.clone(),
@@ -1123,10 +1119,7 @@ fn build_candidates() -> Vec<PaletteCandidate> {
         }
 
         let timeline_entries = node
-            .timeline_page(&wasla_core::TimelineQuery {
-                limit: 20,
-                ..wasla_core::TimelineQuery::default()
-            })
+            .timeline_page(&wasla_core::TimelineQuery { limit: 20, ..wasla_core::TimelineQuery::default() })
             .map(|p| p.entries)
             .unwrap_or_default();
         for item in timeline_entries.into_iter().take(12) {

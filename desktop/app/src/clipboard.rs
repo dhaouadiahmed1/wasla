@@ -15,11 +15,11 @@ use std::{
 };
 
 use data_encoding::BASE64;
+use serde_json::json;
 use wasla_core::{
     CLIP_MAX_IMAGE_BYTES, ClipKind, ClipSuggestion, ClipboardItemKind, DeviceId, Error, FeatureState,
     LinkState, Node, NodeEvent,
 };
-use serde_json::json;
 
 use crate::{
     bridge::app::{describe, open_dialer, show_message, show_message_with_action},

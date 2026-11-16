@@ -16,6 +16,7 @@ use std::{
 
 use bytes::Bytes;
 use iroh::endpoint::{RecvStream, SendStream};
+use tokio::io::{AsyncSeekExt, AsyncWriteExt};
 pub use wasla_protocol::messages::{
     StorageChanged, StorageDelete, StorageEntries, StorageEntry, StorageList, StorageMkdir, StorageRead,
     StorageReadMeta, StorageRename, StorageWriteAccept, StorageWriteDone, StorageWriteOffer,
@@ -27,7 +28,6 @@ use wasla_protocol::{
     messages::{StreamHeader, storage, types},
     read_frame, write_frame,
 };
-use tokio::io::{AsyncSeekExt, AsyncWriteExt};
 
 use crate::{
     Error, NodeEvent, Result,
@@ -1109,10 +1109,7 @@ impl FolderStorage {
             let Ok(name) = item.file_name().into_string() else {
                 continue;
             };
-            if !is_valid_storage_name(&name)
-                || name.starts_with(".wasla")
-                || name.ends_with(".wasla-part")
-            {
+            if !is_valid_storage_name(&name) || name.starts_with(".wasla") || name.ends_with(".wasla-part") {
                 continue;
             }
             let item_path = item.path();

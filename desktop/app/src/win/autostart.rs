@@ -91,9 +91,7 @@ mod tests {
 
     #[test]
     fn builds_are_not_installed_copies() {
-        assert!(!is_installed(Path::new(
-            r"C:\Users\me\src\wasla\target\release\wasla-desktop.exe"
-        )));
+        assert!(!is_installed(Path::new(r"C:\Users\me\src\wasla\target\release\wasla-desktop.exe")));
         if let Ok(dir) = std::env::var("ProgramFiles") {
             assert!(is_installed(&Path::new(&dir).join("Wasla").join("wasla-desktop.exe")));
         }

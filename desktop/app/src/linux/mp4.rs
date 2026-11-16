@@ -613,13 +613,7 @@ fn encode_pcm_to_aac(rate: u32, channels: u8, pcm_s16le: &[u8]) -> Option<Encode
             error.as_mut_ptr(),
             error.len(),
         ) < 0
-            || wasla_video_aac_encoder_send(
-                guard.0,
-                std::ptr::null(),
-                0,
-                error.as_mut_ptr(),
-                error.len(),
-            ) < 0
+            || wasla_video_aac_encoder_send(guard.0, std::ptr::null(), 0, error.as_mut_ptr(), error.len()) < 0
         {
             return None;
         }
@@ -629,13 +623,8 @@ fn encode_pcm_to_aac(rate: u32, channels: u8, pcm_s16le: &[u8]) -> Option<Encode
         loop {
             let mut ptr: *const u8 = std::ptr::null();
             let mut len = 0usize;
-            let status = wasla_video_aac_encoder_receive(
-                guard.0,
-                &mut ptr,
-                &mut len,
-                error.as_mut_ptr(),
-                error.len(),
-            );
+            let status =
+                wasla_video_aac_encoder_receive(guard.0, &mut ptr, &mut len, error.as_mut_ptr(), error.len());
             if status < 0 {
                 return None;
             }

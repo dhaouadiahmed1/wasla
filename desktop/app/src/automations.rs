@@ -8,8 +8,8 @@ use std::{
     sync::{Mutex, OnceLock},
 };
 
-use wasla_core::{DeviceId, LinkState, NodeEvent};
 use serde::{Deserialize, Serialize};
+use wasla_core::{DeviceId, LinkState, NodeEvent};
 
 use crate::{deck, settings, win};
 

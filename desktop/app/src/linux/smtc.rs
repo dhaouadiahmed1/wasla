@@ -13,8 +13,8 @@ use std::path::PathBuf;
 use std::sync::{Mutex, MutexGuard, OnceLock, mpsc};
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use wasla_core::{DeviceId, MediaAction};
 use serde::{Deserialize, Serialize};
+use wasla_core::{DeviceId, MediaAction};
 use zbus::zvariant::{ObjectPath, OwnedValue, Str, Value};
 
 use crate::state::PlayerView;
@@ -521,8 +521,8 @@ pub fn handle_mpris_seek_offset(offset_us: i64) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use wasla_core::MediaPlayer;
     use std::sync::Arc;
+    use wasla_core::MediaPlayer;
 
     static TEST_LOCK: Mutex<()> = Mutex::new(());
 

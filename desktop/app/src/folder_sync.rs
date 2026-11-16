@@ -12,8 +12,8 @@ use std::{
     time::{Duration, SystemTime, UNIX_EPOCH},
 };
 
-use wasla_core::{ConnectionPath, DeviceId, LinkState, Node};
 use serde::{Deserialize, Serialize};
+use wasla_core::{ConnectionPath, DeviceId, LinkState, Node};
 
 use crate::{core_host, settings};
 

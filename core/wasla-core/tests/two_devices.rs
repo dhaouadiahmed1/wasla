@@ -8,6 +8,8 @@ use std::{
     time::Duration,
 };
 
+use tempfile::TempDir;
+use tokio::sync::broadcast::Receiver;
 use wasla_core::{
     Battery, DeviceInfo, DeviceKind, Direction, Error, FeatureState, FileSource, LinkState, MediaAction,
     MediaError, MediaPlayer, Node, NodeConfig, NodeEvent, Notification, NotificationAction,
@@ -15,8 +17,6 @@ use wasla_core::{
     PowerAction, PowerLevel, Transfer, TransferFailure, TransferState,
     features::{Effort, Upgrade, UpgradeAction},
 };
-use tempfile::TempDir;
-use tokio::sync::broadcast::Receiver;
 
 const WAIT: Duration = Duration::from_secs(20);
 
@@ -118,11 +118,7 @@ impl Platform for RecordingPlatform {
         self.links.lock().unwrap().push(url.to_owned());
         Ok(())
     }
-    fn task_notify(
-        &self,
-        _from: &wasla_core::DeviceId,
-        task: &wasla_core::TaskNotify,
-    ) -> Result<(), String> {
+    fn task_notify(&self, _from: &wasla_core::DeviceId, task: &wasla_core::TaskNotify) -> Result<(), String> {
         self.tasks.lock().unwrap().push(task.clone());
         Ok(())
     }
@@ -182,12 +178,7 @@ impl Platform for RecordingPlatform {
     fn mirror_power_requested(&self, _peer: &wasla_core::DeviceId, stay_awake: bool, screen_off: bool) {
         self.mirror_asks.lock().unwrap().push(format!("power awake={stay_awake} off={screen_off}"));
     }
-    fn mirror_input(
-        &self,
-        _peer: &wasla_core::DeviceId,
-        session: u32,
-        input: wasla_core::MirrorInput,
-    ) {
+    fn mirror_input(&self, _peer: &wasla_core::DeviceId, session: u32, input: wasla_core::MirrorInput) {
         self.mirror_asks.lock().unwrap().push(format!("{input:?} on {session}"));
     }
     fn mic_sink(&self, _peer: &wasla_core::DeviceId) -> Option<Arc<dyn wasla_core::MicSink>> {
@@ -301,11 +292,7 @@ impl Platform for RecordingPlatform {
         self.calls.lock().unwrap().push((id.to_owned(), command));
         Ok(())
     }
-    fn call_log(
-        &self,
-        before: Option<i64>,
-        limit: u32,
-    ) -> Result<Vec<wasla_core::CallLogEntry>, String> {
+    fn call_log(&self, before: Option<i64>, limit: u32) -> Result<Vec<wasla_core::CallLogEntry>, String> {
         let entry = |date: i64| wasla_core::CallLogEntry {
             id: format!("log:{date}"),
             number: format!("+1555010{date}"),
@@ -502,10 +489,9 @@ impl Platform for RecordingPlatform {
                     id: id.clone(),
                     data: vec![0xff, 0xd8, id.as_bytes().last().copied().unwrap()],
                 }),
-                "oversized" => Some(PhotoThumb {
-                    id: id.clone(),
-                    data: vec![0; wasla_core::PHOTO_MAX_THUMB_BYTES + 1],
-                }),
+                "oversized" => {
+                    Some(PhotoThumb { id: id.clone(), data: vec![0; wasla_core::PHOTO_MAX_THUMB_BYTES + 1] })
+                }
                 _ => None,
             })
             .collect())
@@ -551,18 +537,12 @@ impl Platform for RecordingPlatform {
         self.pc_audio_outputs.lock().unwrap().push(id.to_owned());
         Ok(())
     }
-    fn storage_list(
-        &self,
-        path: &str,
-    ) -> Result<Vec<wasla_core::StorageEntry>, wasla_core::StorageError> {
+    fn storage_list(&self, path: &str) -> Result<Vec<wasla_core::StorageEntry>, wasla_core::StorageError> {
         let guard = self.storage.lock().unwrap();
         let storage = guard.as_ref().ok_or(wasla_core::StorageError::Unsupported)?;
         storage.list(path)
     }
-    fn storage_open_read(
-        &self,
-        path: &str,
-    ) -> Result<wasla_core::StorageReadFile, wasla_core::StorageError> {
+    fn storage_open_read(&self, path: &str) -> Result<wasla_core::StorageReadFile, wasla_core::StorageError> {
         let guard = self.storage.lock().unwrap();
         let storage = guard.as_ref().ok_or(wasla_core::StorageError::Unsupported)?;
         storage.open_read(path)
@@ -1952,9 +1932,7 @@ async fn phones_lock_pcs_and_links_open_on_either_side() {
     // A PC that can't hibernate (turned off there) isn't asked to.
     let refused = phone.node.pc_power(pc_id, PowerAction::Hibernate).await;
     assert!(matches!(refused, Err(Error::Unsupported)), "{refused:?}");
-    pc.node
-        .update_power(PowerLevel::Basic, vec!["pc.power".into(), wasla_core::PC_HIBERNATE.into()])
-        .await;
+    pc.node.update_power(PowerLevel::Basic, vec!["pc.power".into(), wasla_core::PC_HIBERNATE.into()]).await;
     let deadline = tokio::time::Instant::now() + WAIT;
     loop {
         match phone.node.pc_power(pc_id, PowerAction::Hibernate).await {
@@ -2149,11 +2127,7 @@ async fn the_phone_sound_plays_on_the_pc_without_its_screen() {
     let mut phone = device_with(
         "Pixel",
         DeviceKind::Phone,
-        &[
-            wasla_core::MIRROR_CAPTURE,
-            wasla_core::MIRROR_AUDIO_PLAYBACK,
-            wasla_core::MIRROR_SOUND,
-        ],
+        &[wasla_core::MIRROR_CAPTURE, wasla_core::MIRROR_AUDIO_PLAYBACK, wasla_core::MIRROR_SOUND],
     )
     .await;
     pair_qr(&mut pc, &mut phone).await;
@@ -2163,11 +2137,8 @@ async fn the_phone_sound_plays_on_the_pc_without_its_screen() {
 
     // The phone sends only its sound.
     let sound = Arc::new(with_timeout("open sound", phone.node.mirror_open_audio(pc_id)).await.unwrap());
-    let format = wasla_core::MirrorAudioConfig {
-        codec: wasla_core::MIRROR_PCM.into(),
-        rate: 48_000,
-        channels: 2,
-    };
+    let format =
+        wasla_core::MirrorAudioConfig { codec: wasla_core::MIRROR_PCM.into(), rate: 48_000, channels: 2 };
     let sender = sound.clone();
     let sent = tokio::task::spawn_blocking(move || {
         [
@@ -2210,20 +2181,13 @@ async fn the_phone_sound_plays_on_the_pc_without_its_screen() {
 #[tokio::test(flavor = "multi_thread")]
 async fn the_phone_screen_streams_to_the_pc() {
     use wasla_core::{MirrorSend, PacketKind};
-    let mut pc = device_with(
-        "Desktop",
-        DeviceKind::Desktop,
-        &[wasla_core::MIRROR_VIEW, wasla_core::MIRROR_LISTEN],
-    )
-    .await;
+    let mut pc =
+        device_with("Desktop", DeviceKind::Desktop, &[wasla_core::MIRROR_VIEW, wasla_core::MIRROR_LISTEN])
+            .await;
     let mut phone = device_with(
         "Pixel",
         DeviceKind::Phone,
-        &[
-            wasla_core::MIRROR_CAPTURE,
-            wasla_core::MIRROR_INPUT,
-            wasla_core::MIRROR_AUDIO_PLAYBACK,
-        ],
+        &[wasla_core::MIRROR_CAPTURE, wasla_core::MIRROR_INPUT, wasla_core::MIRROR_AUDIO_PLAYBACK],
     )
     .await;
     pair_qr(&mut pc, &mut phone).await;
@@ -2246,8 +2210,7 @@ async fn the_phone_screen_streams_to_the_pc() {
 
     // The user agreed: the phone streams.
     let stream = Arc::new(with_timeout("open", phone.node.mirror_open(pc_id)).await.unwrap());
-    let config =
-        wasla_core::MirrorConfig { codec: "h264".into(), width: 1080, height: 2400, session: 0 };
+    let config = wasla_core::MirrorConfig { codec: "h264".into(), width: 1080, height: 2400, session: 0 };
     let sender = stream.clone();
     let sent = tokio::task::spawn_blocking(move || {
         [
@@ -2269,11 +2232,8 @@ async fn the_phone_screen_streams_to_the_pc() {
 
     // And its sound, on a stream of its own.
     let sound = Arc::new(with_timeout("open sound", phone.node.mirror_open_audio(pc_id)).await.unwrap());
-    let format = wasla_core::MirrorAudioConfig {
-        codec: wasla_core::MIRROR_PCM.into(),
-        rate: 48_000,
-        channels: 2,
-    };
+    let format =
+        wasla_core::MirrorAudioConfig { codec: wasla_core::MIRROR_PCM.into(), rate: 48_000, channels: 2 };
     let sender = sound.clone();
     let sent = tokio::task::spawn_blocking(move || {
         [
@@ -2467,8 +2427,7 @@ async fn phone_apps_open_in_windows_of_their_own() {
 async fn the_pc_reads_and_sends_texts_through_the_phone() {
     let mut pc = device_with("Desktop", DeviceKind::Desktop, &[wasla_core::SMS_SHOW]).await;
     let mut phone =
-        device_with("Pixel", DeviceKind::Phone, &[wasla_core::SMS_READ, wasla_core::SMS_SEND])
-            .await;
+        device_with("Pixel", DeviceKind::Phone, &[wasla_core::SMS_READ, wasla_core::SMS_SEND]).await;
     pair_qr(&mut pc, &mut phone).await;
     let (pc_id, phone_id) = (pc.node.device_id(), phone.node.device_id());
 
@@ -2509,12 +2468,8 @@ async fn the_pc_reads_and_sends_texts_through_the_phone() {
 async fn calls_show_on_the_pc_which_can_answer_them() {
     use wasla_core::{CallCommand, CallState};
     let mut pc = device_with("Desktop", DeviceKind::Desktop, &[wasla_core::CALLS_SHOW]).await;
-    let mut phone = device_with(
-        "Pixel",
-        DeviceKind::Phone,
-        &[wasla_core::CALLS_STATE, wasla_core::CALLS_CONTROL],
-    )
-    .await;
+    let mut phone =
+        device_with("Pixel", DeviceKind::Phone, &[wasla_core::CALLS_STATE, wasla_core::CALLS_CONTROL]).await;
     pair_qr(&mut pc, &mut phone).await;
     let (pc_id, phone_id) = (pc.node.device_id(), phone.node.device_id());
     let ringing = CallState {
@@ -2802,11 +2757,7 @@ async fn call_log_and_dial_work_and_respect_permissions_and_toggles() {
         .node
         .update_power(
             PowerLevel::NotApplicable,
-            vec![
-                "media.control".into(),
-                wasla_core::CALLS_LOG.into(),
-                wasla_core::CALLS_DIAL.into(),
-            ],
+            vec!["media.control".into(), wasla_core::CALLS_LOG.into(), wasla_core::CALLS_DIAL.into()],
         )
         .await;
     wait_for(&mut pc, "call.dial unlocked", |e| match e {
@@ -2934,10 +2885,7 @@ async fn gallery_albums_paging_thumbs_download_and_toggles() {
 
     phone
         .node
-        .update_power(
-            PowerLevel::NotApplicable,
-            vec!["media.control".into(), wasla_core::PHOTOS_READ.into()],
-        )
+        .update_power(PowerLevel::NotApplicable, vec!["media.control".into(), wasla_core::PHOTOS_READ.into()])
         .await;
     wait_for(&mut pc, "photos.read unlocked", |e| match e {
         NodeEvent::Capabilities(m)
@@ -3486,8 +3434,8 @@ async fn wake_relay_is_only_for_a_paired_pcs_own_address() {
 
 #[tokio::test(flavor = "multi_thread")]
 async fn wake_info_syncs_persists_respects_toggle_and_sends_magic_packet() {
-    use wasla_core::{PC_WAKE, PcWakeInfo, magic_packet};
     use std::net::Ipv4Addr;
+    use wasla_core::{PC_WAKE, PcWakeInfo, magic_packet};
 
     let mut pc = device_with("Desktop", DeviceKind::Desktop, &[PC_WAKE]).await;
     let mut phone = device("Pixel", DeviceKind::Phone).await;
@@ -4654,8 +4602,7 @@ async fn mms_image_attachments_send_over_sms_service() {
 
     let mut pc = device_with("Desktop", DeviceKind::Desktop, &[wasla_core::SMS_SHOW]).await;
     let mut phone =
-        device_with("Pixel", DeviceKind::Phone, &[wasla_core::SMS_READ, wasla_core::SMS_SEND])
-            .await;
+        device_with("Pixel", DeviceKind::Phone, &[wasla_core::SMS_READ, wasla_core::SMS_SEND]).await;
     pair_qr(&mut pc, &mut phone).await;
     let phone_id = phone.node.device_id();
 
@@ -5031,9 +4978,7 @@ async fn a_capture_the_pc_never_asked_for_isnt_saved() {
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn data_retention_counts_and_clear_all_local_data_preserves_pairing_and_settings() {
-    use wasla_core::{
-        Notification, NotificationAction, NotificationChatMessage, NotificationConversation,
-    };
+    use wasla_core::{Notification, NotificationAction, NotificationChatMessage, NotificationConversation};
 
     let mut pc = device_with("pc", DeviceKind::Desktop, &["notify.show", "clip.write"]).await;
     let mut phone = device_with("phone", DeviceKind::Phone, &["notify.mirror", "notify.reply"]).await;
@@ -5042,10 +4987,7 @@ async fn data_retention_counts_and_clear_all_local_data_preserves_pairing_and_se
 
     // Configure non-default retention and a device toggle on PC.
     pc.node
-        .set_timeline_retention(wasla_core::timeline::TimelineRetention {
-            max_days: 30,
-            max_entries: 5000,
-        })
+        .set_timeline_retention(wasla_core::timeline::TimelineRetention { max_days: 30, max_entries: 5000 })
         .unwrap();
     pc.node.set_device_toggle(phone_id, "clipboard", true).unwrap();
 
@@ -6061,13 +6003,9 @@ async fn usb_transport_carries_features_when_wifi_unavailable() {
         &["clip.write", wasla_core::MIRROR_CAPTURE],
     )
     .await;
-    let mut pc = start_usb_device(
-        "Desktop USB",
-        DeviceKind::Desktop,
-        None,
-        &["clip.write", wasla_core::MIRROR_VIEW],
-    )
-    .await;
+    let mut pc =
+        start_usb_device("Desktop USB", DeviceKind::Desktop, None, &["clip.write", wasla_core::MIRROR_VIEW])
+            .await;
     let (pc_id, phone_id) = (pc.node.device_id(), phone.node.device_id());
 
     let usb_port = phone.node.usb_port().expect("phone USB TCP listener");
@@ -6152,8 +6090,7 @@ async fn usb_transport_carries_features_when_wifi_unavailable() {
     };
     with_timeout("start mirror over USB", pc.node.mirror_start(phone_id, options)).await.unwrap();
     let stream = Arc::new(with_timeout("open mirror over USB", phone.node.mirror_open(pc_id)).await.unwrap());
-    let mirror_cfg =
-        wasla_core::MirrorConfig { codec: "h264".into(), width: 1080, height: 2400, session: 0 };
+    let mirror_cfg = wasla_core::MirrorConfig { codec: "h264".into(), width: 1080, height: 2400, session: 0 };
     let sender = stream.clone();
     let sent = tokio::task::spawn_blocking(move || {
         [
@@ -6184,11 +6121,11 @@ async fn usb_transport_carries_features_when_wifi_unavailable() {
 
 #[tokio::test(flavor = "multi_thread")]
 async fn reverse_mirror_requires_pc_consent_and_remote_input_toggle() {
+    use std::sync::atomic::Ordering;
     use wasla_core::{
         MIRROR_CAPTURE, MIRROR_INPUT, MIRROR_SCREEN, MirrorConfig, MirrorInput, MirrorSend, MirrorStart,
         PC_MIRROR_TOGGLE, PacketKind, TouchAction,
     };
-    use std::sync::atomic::Ordering;
 
     let mut pc = device_with("Desktop", DeviceKind::Desktop, &[MIRROR_CAPTURE, MIRROR_INPUT]).await;
     let mut phone = device_with("Pixel", DeviceKind::Phone, &[wasla_core::MIRROR_VIEW]).await;
@@ -6832,8 +6769,7 @@ async fn play_on_phone_offers_a_video_file_the_phone_reads_in_ranges() {
     use wasla_core::{MEDIA_STREAM, MEDIA_WATCH, MEDIA_WATCH_MAX_READ};
 
     let mut pc = device_with("Desktop", DeviceKind::Desktop, &[MEDIA_STREAM]).await;
-    let mut phone =
-        device_with("Pixel", DeviceKind::Phone, &[MEDIA_WATCH, wasla_core::MIRROR_VIEW]).await;
+    let mut phone = device_with("Pixel", DeviceKind::Phone, &[MEDIA_WATCH, wasla_core::MIRROR_VIEW]).await;
     pair_qr(&mut pc, &mut phone).await;
     let (pc_id, phone_id) = (pc.node.device_id(), phone.node.device_id());
 
@@ -6885,8 +6821,7 @@ async fn play_on_phone_lets_the_phone_watch_only_what_the_pc_offered() {
     use wasla_core::{MEDIA_STREAM, MEDIA_WATCH, MIRROR_SCREEN, MirrorStart};
 
     let mut pc = device_with("Desktop", DeviceKind::Desktop, &[MEDIA_STREAM]).await;
-    let mut phone =
-        device_with("Pixel", DeviceKind::Phone, &[MEDIA_WATCH, wasla_core::MIRROR_VIEW]).await;
+    let mut phone = device_with("Pixel", DeviceKind::Phone, &[MEDIA_WATCH, wasla_core::MIRROR_VIEW]).await;
     pair_qr(&mut pc, &mut phone).await;
     let (pc_id, phone_id) = (pc.node.device_id(), phone.node.device_id());
     let watch = |player: &str| MirrorStart {
@@ -7399,8 +7334,8 @@ async fn elevated_over_usb_is_refused_without_a_usb_connection() {
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn spoofed_usb_hello_is_not_trusted_without_matching_quic_identity() {
-    use wasla_core::{ConnectionPath, DeviceId};
     use tokio::io::{AsyncReadExt, AsyncWriteExt};
+    use wasla_core::{ConnectionPath, DeviceId};
 
     async fn send_usb_hello(stream: &mut tokio::net::TcpStream, id: &DeviceId, name: &str) {
         let json = format!(r#"{{"v":1,"id":"{id}","name":"{name}"}}"#);

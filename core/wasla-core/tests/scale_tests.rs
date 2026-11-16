@@ -12,13 +12,13 @@ use std::{
     time::{Duration, Instant},
 };
 
+use tempfile::TempDir;
 use wasla_core::{
     ClipboardItemKind, DeviceId, DeviceInfo, DeviceKind, FileSource, LinkState, Node, NodeConfig, NodeEvent,
     NoopPlatform, Notification, NotificationAction, NotificationChatMessage, NotificationConversation,
     OutgoingFile, PlainKeyProtector, TimelineKind, TimelineQuery, TimelineRetention, TransferState,
     clipboard_history::ClipboardHistoryStore,
 };
-use tempfile::TempDir;
 
 fn make_config(dir: &TempDir, name: &str, kind: DeviceKind) -> NodeConfig {
     let mut cfg = NodeConfig::new(

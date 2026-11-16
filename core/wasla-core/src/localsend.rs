@@ -23,10 +23,6 @@ use std::{
     time::{Duration, Instant},
 };
 
-use wasla_protocol::{
-    DeviceId,
-    messages::{DeviceInfo, DeviceKind, files},
-};
 use ring::{
     rand::{SecureRandom, SystemRandom},
     signature::{ECDSA_P256_SHA256_ASN1_SIGNING, EcdsaKeyPair, KeyPair},
@@ -47,6 +43,10 @@ use tokio::{
 };
 use tokio_rustls::{TlsAcceptor, TlsConnector};
 use tokio_util::sync::CancellationToken;
+use wasla_protocol::{
+    DeviceId,
+    messages::{DeviceInfo, DeviceKind, files},
+};
 
 use crate::{
     Error, Result, TimelineKind,

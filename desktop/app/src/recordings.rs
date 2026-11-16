@@ -550,10 +550,8 @@ fn demux_m4a_aac(bytes: &[u8]) -> Option<DemuxedM4a> {
 
 #[cfg(all(target_os = "linux", linux_ffmpeg_video))]
 unsafe extern "C" {
-    fn wasla_video_aac_decoder_create(
-        error: *mut std::ffi::c_char,
-        capacity: usize,
-    ) -> *mut std::ffi::c_void;
+    fn wasla_video_aac_decoder_create(error: *mut std::ffi::c_char, capacity: usize)
+    -> *mut std::ffi::c_void;
     fn wasla_video_aac_decoder_destroy(decoder: *mut std::ffi::c_void);
     fn wasla_video_aac_decoder_send(
         decoder: *mut std::ffi::c_void,
@@ -662,8 +660,7 @@ fn decode_m4a_to_pcm_s16le(m4a_bytes: &[u8]) -> Option<(u32, u8, Vec<i16>)> {
                 drain_frames(guard.0, &mut sample_rate, &mut out_channels, &mut pcm_samples);
             }
         }
-        let _ =
-            wasla_video_aac_decoder_send(guard.0, std::ptr::null(), 0, error.as_mut_ptr(), error.len());
+        let _ = wasla_video_aac_decoder_send(guard.0, std::ptr::null(), 0, error.as_mut_ptr(), error.len());
         drain_frames(guard.0, &mut sample_rate, &mut out_channels, &mut pcm_samples);
 
         if pcm_samples.is_empty() {

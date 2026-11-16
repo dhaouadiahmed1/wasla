@@ -3,8 +3,8 @@
 //! clipboard items (linked by ID without duplicating content), links opened,
 //! saved photos, voice recordings, and mirroring / webcam sessions.
 
-use wasla_protocol::DeviceId;
 use serde::{Deserialize, Serialize};
+use wasla_protocol::DeviceId;
 
 /// Default retention window in days (90 days).
 pub const DEFAULT_TIMELINE_MAX_DAYS: u32 = 90;

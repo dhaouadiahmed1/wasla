@@ -9,11 +9,11 @@ use std::{
     sync::{Arc, Mutex, MutexGuard, OnceLock},
 };
 
+use rusqlite::{Connection, OptionalExtension, params};
 use wasla_protocol::{
     DeviceId,
     messages::{DeviceInfo, DeviceKind, Notification, PcWakeInfo, PowerLevel, ScreenShape},
 };
-use rusqlite::{Connection, OptionalExtension, params};
 
 use crate::{
     CameraCaptureMode, Error, RecordingMarker, Result, TaskNotify,
@@ -3250,9 +3250,7 @@ mod tests {
 
     #[test]
     fn data_retention_counts_and_clear_all_preserves_peers_and_meta() {
-        use wasla_protocol::messages::{
-            Notification, NotificationChatMessage, NotificationConversation,
-        };
+        use wasla_protocol::messages::{Notification, NotificationChatMessage, NotificationConversation};
         let store = Store::in_memory().unwrap();
         let peer = DeviceId([8; 32]);
         let now = 1_700_000_000i64;

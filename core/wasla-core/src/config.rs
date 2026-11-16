@@ -236,11 +236,7 @@ pub trait Platform: Send + Sync + 'static {
 
     /// Show or update an ongoing or completed task notification sent by a paired
     /// device (`task.notify`, `docs/protocol/actions.md`).
-    fn task_notify(
-        &self,
-        _from: &wasla_protocol::DeviceId,
-        _task: &crate::TaskNotify,
-    ) -> Result<(), String> {
+    fn task_notify(&self, _from: &wasla_protocol::DeviceId, _task: &crate::TaskNotify) -> Result<(), String> {
         Err("this device doesn't show task notifications".into())
     }
 
@@ -313,8 +309,7 @@ pub trait Platform: Send + Sync + 'static {
     /// The PC's mouse or keyboard on this phone's mirrored screen or app
     /// window (checked, and only while it offers `mirror.input`, or
     /// `mirror.virtual_display` for app windows). Must return quickly.
-    fn mirror_input(&self, _peer: &wasla_protocol::DeviceId, _session: u32, _input: crate::MirrorInput) {
-    }
+    fn mirror_input(&self, _peer: &wasla_protocol::DeviceId, _session: u32, _input: crate::MirrorInput) {}
 
     /// The PC's decoder needs a fresh start: encode a keyframe next.
     fn mirror_keyframe_requested(&self, _peer: &wasla_protocol::DeviceId, _session: u32) {}
@@ -338,12 +333,7 @@ pub trait Platform: Send + Sync + 'static {
 
     /// The PC changed `stay_awake` or `screen_off` while mirroring this phone's
     /// screen (`session == 0`).
-    fn mirror_power_requested(
-        &self,
-        _peer: &wasla_protocol::DeviceId,
-        _stay_awake: bool,
-        _screen_off: bool,
-    ) {
+    fn mirror_power_requested(&self, _peer: &wasla_protocol::DeviceId, _stay_awake: bool, _screen_off: bool) {
     }
 
     /// The apps a PC may open in windows of their own (launchable ones),
@@ -546,10 +536,7 @@ pub trait Platform: Send + Sync + 'static {
 
     /// Where a phone's webcam video stream goes on this PC when it starts
     /// streaming (`docs/protocol/webcam.md`). `None` refuses the stream.
-    fn webcam_sink(
-        &self,
-        _peer: &wasla_protocol::DeviceId,
-    ) -> Option<std::sync::Arc<dyn crate::WebcamSink>> {
+    fn webcam_sink(&self, _peer: &wasla_protocol::DeviceId) -> Option<std::sync::Arc<dyn crate::WebcamSink>> {
         None
     }
 

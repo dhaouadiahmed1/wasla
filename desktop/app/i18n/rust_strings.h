@@ -14,11 +14,6 @@ static const char *const wasla_rust_strings[] = {
     QT_TRANSLATE_NOOP("App", "Find my phone"), // desktop/app/src/bridge/app.rs
     QT_TRANSLATE_NOOP("App", "My phone's colors"), // desktop/app/src/bridge/app.rs
     QT_TRANSLATE_NOOP("App", "My phone's colors (%1)"), // desktop/app/src/bridge/app.rs
-    QT_TRANSLATE_NOOP("App", "Wasla · %1"), // desktop/app/src/bridge/app.rs
-    QT_TRANSLATE_NOOP("App", "Wasla · %1 devices connected"), // desktop/app/src/bridge/app.rs
-    QT_TRANSLATE_NOOP("App", "Wasla · 1 device connected"), // desktop/app/src/bridge/app.rs
-    QT_TRANSLATE_NOOP("App", "Wasla · no devices paired"), // desktop/app/src/bridge/app.rs
-    QT_TRANSLATE_NOOP("App", "Wasla · not connected"), // desktop/app/src/bridge/app.rs
     QT_TRANSLATE_NOOP("App", "No phone is paired yet."), // desktop/app/src/bridge/app.rs
     QT_TRANSLATE_NOOP("App", "Open Wasla"), // desktop/app/src/bridge/app.rs
     QT_TRANSLATE_NOOP("App", "Open copied link on phone"), // desktop/app/src/bridge/app.rs
@@ -37,6 +32,11 @@ static const char *const wasla_rust_strings[] = {
     QT_TRANSLATE_NOOP("App", "The received file history couldn't be cleared. Try again."), // desktop/app/src/bridge/app.rs
     QT_TRANSLATE_NOOP("App", "The update couldn't be installed. Try again."), // desktop/app/src/bridge/app.rs
     QT_TRANSLATE_NOOP("App", "Toggle Shelf"), // desktop/app/src/bridge/app.rs
+    QT_TRANSLATE_NOOP("App", "Wasla · %1"), // desktop/app/src/bridge/app.rs
+    QT_TRANSLATE_NOOP("App", "Wasla · %1 devices connected"), // desktop/app/src/bridge/app.rs
+    QT_TRANSLATE_NOOP("App", "Wasla · 1 device connected"), // desktop/app/src/bridge/app.rs
+    QT_TRANSLATE_NOOP("App", "Wasla · no devices paired"), // desktop/app/src/bridge/app.rs
+    QT_TRANSLATE_NOOP("App", "Wasla · not connected"), // desktop/app/src/bridge/app.rs
     QT_TRANSLATE_NOOP("App", "Wi-Fi %1/4"), // desktop/app/src/bridge/app.rs
     QT_TRANSLATE_NOOP("App", "Your phone"), // desktop/app/src/bridge/app.rs
     QT_TRANSLATE_NOOP("Automations", "Triggered by %1"), // desktop/app/src/automations.rs
@@ -216,10 +216,6 @@ static const char *const wasla_rust_strings[] = {
     QT_TRANSLATE_NOOP("Doctor", "It hasn't connected yet."), // desktop/app/src/doctor.rs
     QT_TRANSLATE_NOOP("Doctor", "Keep %1 reachable in the background (%2)"), // desktop/app/src/doctor.rs
     QT_TRANSLATE_NOOP("Doctor", "Last seen %1."), // desktop/app/src/doctor.rs
-    QT_TRANSLATE_NOOP("Doctor", "Wasla can't show its icon in the top bar"), // desktop/app/src/linux/doctor.rs
-    QT_TRANSLATE_NOOP("Doctor", "Wasla is in the top bar"), // desktop/app/src/linux/doctor.rs
-    QT_TRANSLATE_NOOP("Doctor", "Wasla isn't allowed through Windows Firewall"), // desktop/app/src/doctor.rs
-    QT_TRANSLATE_NOOP("Doctor", "Wasla isn't allowed through the firewall"), // desktop/app/src/doctor.rs
     QT_TRANSLATE_NOOP("Doctor", "On Huawei / Honor: open Settings → Battery → App launch, turn off Manage automatically for Wasla, and keep Auto-launch, Secondary launch, and Run in background on."), // desktop/app/src/doctor.rs
     QT_TRANSLATE_NOOP("Doctor", "On OnePlus / OxygenOS: open Settings → Apps → App management → Wasla → Battery usage and turn on Allow background activity and Allow auto-launch."), // desktop/app/src/doctor.rs
     QT_TRANSLATE_NOOP("Doctor", "On Oppo / Realme: open Settings → Apps → App management → Wasla → Battery usage and turn on Allow background activity and Allow auto-launch."), // desktop/app/src/doctor.rs
@@ -250,6 +246,10 @@ static const char *const wasla_rust_strings[] = {
     QT_TRANSLATE_NOOP("Doctor", "This usually takes a few seconds."), // desktop/app/src/doctor.rs
     QT_TRANSLATE_NOOP("Doctor", "To connect over a cable, Wasla can get Android's USB tools from Google for you, and the phone needs USB debugging on. Wi-Fi works without them."), // desktop/app/src/doctor.rs
     QT_TRANSLATE_NOOP("Doctor", "VPNs often keep devices on your network from reaching this PC. If your phone can't connect, try turning it off."), // desktop/app/src/doctor.rs
+    QT_TRANSLATE_NOOP("Doctor", "Wasla can't show its icon in the top bar"), // desktop/app/src/linux/doctor.rs
+    QT_TRANSLATE_NOOP("Doctor", "Wasla is in the top bar"), // desktop/app/src/linux/doctor.rs
+    QT_TRANSLATE_NOOP("Doctor", "Wasla isn't allowed through Windows Firewall"), // desktop/app/src/doctor.rs
+    QT_TRANSLATE_NOOP("Doctor", "Wasla isn't allowed through the firewall"), // desktop/app/src/doctor.rs
     QT_TRANSLATE_NOOP("Doctor", "While away"), // desktop/app/src/doctor.rs
     QT_TRANSLATE_NOOP("Doctor", "Windows Firewall blocks Wasla"), // desktop/app/src/doctor.rs
     QT_TRANSLATE_NOOP("Doctor", "Windows Firewall is off for this network"), // desktop/app/src/doctor.rs
@@ -296,9 +296,6 @@ static const char *const wasla_rust_strings[] = {
     QT_TRANSLATE_NOOP("Guide", "Messages"), // desktop/app/src/bridge/app.rs
     QT_TRANSLATE_NOOP("Guide", "Most Wasla features work in Standard mode with regular Android permissions. Two optional modes unlock deeper system integration:\n\nElevated mode (Wireless debugging or root)\n- Captures the phone screen without showing the Android cast confirmation prompt every time.\n- Streams individual phone apps in separate desktop windows (virtual displays).\n- Controls additional system quick toggles.\n\nAssist mode (Android Accessibility Service)\n- Injects mouse clicks, scrolling, and touch gestures when you control your phone from your PC.\n- Wasla never reads screen text or logs keystrokes through the Accessibility service."), // desktop/app/src/bridge/app.rs
     QT_TRANSLATE_NOOP("Guide", "Nectar Island"), // desktop/app/src/bridge/app.rs
-    QT_TRANSLATE_NOOP("Guide", "Wasla links your Android phone and your PC directly on your local network or over a USB cable.\n\nHow it works\n- Devices discover each other over local Wi-Fi (mDNS) or USB (ADB reverse tunnel) and connect over QUIC (TLS 1.3).\n- Every connection is mutually authenticated using Ed25519 device keys generated on each device.\n- There is no user account, no cloud database, and no telemetry.\n\nCapability tiers on Android\n- Standard mode: Works right after installation with standard Android permissions.\n- Elevated mode (optional): Uses Wireless debugging (set up once in the phone app) or root for phone apps in their own windows, mirroring without the screen capture prompt, and more phone controls.\n- Assist mode (optional): Uses the Android Accessibility service only when you enable Remote input so your PC mouse and keyboard can control the phone."), // desktop/app/src/bridge/app.rs
-    QT_TRANSLATE_NOOP("Guide", "Wasla never asks for every permission up front. Each feature works independently:\n\n- Notification Access: Required only if you want phone notifications, inline replies, and notification-backed chat threads on your PC.\n- SMS and Contacts: Required only if you want to read and send SMS/MMS messages or look up contact names on your PC.\n- Phone and Call Log: Required only if you want incoming call alerts, call history, or dialing from your PC.\n- Media and Photos: Required only if you want the Photos gallery, Shelf latest photo, or folder sync.\n- Camera and Microphone: Required only while streaming your phone as a webcam, taking a Continuity Camera shot, or recording a voice note."), // desktop/app/src/bridge/app.rs
-    QT_TRANSLATE_NOOP("Guide", "Wasla overview"), // desktop/app/src/bridge/app.rs
     QT_TRANSLATE_NOOP("Guide", "Notifications"), // desktop/app/src/bridge/app.rs
     QT_TRANSLATE_NOOP("Guide", "Phone as speaker"), // desktop/app/src/bridge/app.rs
     QT_TRANSLATE_NOOP("Guide", "Phone as webcam"), // desktop/app/src/bridge/app.rs
@@ -316,6 +313,9 @@ static const char *const wasla_rust_strings[] = {
     QT_TRANSLATE_NOOP("Guide", "Type on phone"), // desktop/app/src/bridge/app.rs
     QT_TRANSLATE_NOOP("Guide", "Voice recorder"), // desktop/app/src/bridge/app.rs
     QT_TRANSLATE_NOOP("Guide", "Wake PC"), // desktop/app/src/bridge/app.rs
+    QT_TRANSLATE_NOOP("Guide", "Wasla links your Android phone and your PC directly on your local network or over a USB cable.\n\nHow it works\n- Devices discover each other over local Wi-Fi (mDNS) or USB (ADB reverse tunnel) and connect over QUIC (TLS 1.3).\n- Every connection is mutually authenticated using Ed25519 device keys generated on each device.\n- There is no user account, no cloud database, and no telemetry.\n\nCapability tiers on Android\n- Standard mode: Works right after installation with standard Android permissions.\n- Elevated mode (optional): Uses Wireless debugging (set up once in the phone app) or root for phone apps in their own windows, mirroring without the screen capture prompt, and more phone controls.\n- Assist mode (optional): Uses the Android Accessibility service only when you enable Remote input so your PC mouse and keyboard can control the phone."), // desktop/app/src/bridge/app.rs
+    QT_TRANSLATE_NOOP("Guide", "Wasla never asks for every permission up front. Each feature works independently:\n\n- Notification Access: Required only if you want phone notifications, inline replies, and notification-backed chat threads on your PC.\n- SMS and Contacts: Required only if you want to read and send SMS/MMS messages or look up contact names on your PC.\n- Phone and Call Log: Required only if you want incoming call alerts, call history, or dialing from your PC.\n- Media and Photos: Required only if you want the Photos gallery, Shelf latest photo, or folder sync.\n- Camera and Microphone: Required only while streaming your phone as a webcam, taking a Continuity Camera shot, or recording a voice note."), // desktop/app/src/bridge/app.rs
+    QT_TRANSLATE_NOOP("Guide", "Wasla overview"), // desktop/app/src/bridge/app.rs
     QT_TRANSLATE_NOOP("Guide", "What it does\nBrowses recent photos, camera shots, and screenshots on your phone without copying your entire library first. You can view full-resolution images, copy them to the clipboard, save them to disk, or drag them directly into other Windows apps.\n\nWhere to find it\n- Left navigation rail › Photos.\n- Shelf edge panel (Ctrl+Alt+S) › Latest photo and screenshot.\n\nWhat it needs\n- Photos and Media permission granted on your Android phone."), // desktop/app/src/bridge/app.rs
     QT_TRANSLATE_NOOP("Guide", "What it does\nControls your phone's Do Not Disturb mode, ringer mode (Sound, Vibrate, Silent), flashlight, media volume, screen brightness, Wi-Fi, Bluetooth, and Find My Phone ring from your PC.\n\nWhere to find it\n- Home › Phone controls and Find phone.\n- Command Palette.\n\nWhat it needs\n- Volume, flashlight, and Find My Phone work in Standard mode; Do Not Disturb requires Notification Policy access; Wi-Fi and Bluetooth toggles use Elevated mode on newer Android versions."), // desktop/app/src/bridge/app.rs
     QT_TRANSLATE_NOOP("Guide", "What it does\nDiscovers and exchanges files with nearby devices running LocalSend v2 on your local network without requiring pairing.\n\nWhere to find it\n- Home › LocalSend nearby, while LocalSend is on.\n- Settings › Files & Sync › LocalSend on local network.\n\nWhat it needs\n- LocalSend on local network turned on in Settings › Files & Sync, and both devices on the same local network."), // desktop/app/src/bridge/app.rs
@@ -412,7 +412,6 @@ static const char *const wasla_rust_strings[] = {
     QT_TRANSLATE_NOOP("PhoneInstall", "It didn't match its checksum, so it wasn't installed. Try again."), // desktop/app/src/bridge/phone_install.rs
     QT_TRANSLATE_NOOP("PhoneInstall", "It was signed differently (a test build, or one from another store), so Android won't update it. Replacing it removes it with its data, including the PCs it's paired with, then installs this one."), // desktop/app/src/bridge/phone_install.rs
     QT_TRANSLATE_NOOP("PhoneInstall", "Keep it plugged in and unlocked until the install is done, then try again."), // desktop/app/src/bridge/phone_install.rs
-    QT_TRANSLATE_NOOP("PhoneInstall", "Wasla needs Android 8.0 or newer."), // desktop/app/src/bridge/phone_install.rs
     QT_TRANSLATE_NOOP("PhoneInstall", "The download was damaged"), // desktop/app/src/bridge/phone_install.rs
     QT_TRANSLATE_NOOP("PhoneInstall", "The install was stopped on the phone"), // desktop/app/src/bridge/phone_install.rs
     QT_TRANSLATE_NOOP("PhoneInstall", "The phone already has a newer version"), // desktop/app/src/bridge/phone_install.rs
@@ -423,6 +422,7 @@ static const char *const wasla_rust_strings[] = {
     QT_TRANSLATE_NOOP("PhoneInstall", "The phone stopped answering"), // desktop/app/src/bridge/phone_install.rs
     QT_TRANSLATE_NOOP("PhoneInstall", "There's nothing to install. Open Wasla on the phone to pair it."), // desktop/app/src/bridge/phone_install.rs
     QT_TRANSLATE_NOOP("PhoneInstall", "This phone's Android is too old"), // desktop/app/src/bridge/phone_install.rs
+    QT_TRANSLATE_NOOP("PhoneInstall", "Wasla needs Android 8.0 or newer."), // desktop/app/src/bridge/phone_install.rs
     QT_TRANSLATE_NOOP("PhoneMic", "Tap Start on %1 to use its microphone."), // desktop/app/src/phone_mic.rs
     QT_TRANSLATE_NOOP("PhoneMic", "The microphone is turned off for this PC on %1."), // desktop/app/src/phone_mic.rs
     QT_TRANSLATE_NOOP("PhoneMic", "Update Wasla on %1 to use its microphone."), // desktop/app/src/phone_mic.rs
@@ -532,11 +532,6 @@ static const char *const wasla_rust_strings[] = {
     QT_TRANSLATE_NOOP("Transfers", "That's too many files to send at once."), // desktop/app/src/transfers.rs
     QT_TRANSLATE_NOOP("Transfers", "There's nothing to send in there."), // desktop/app/src/transfers.rs
     QT_TRANSLATE_NOOP("Updater", "Couldn't check for updates. Check your internet connection."), // desktop/app/src/updater.rs
-    QT_TRANSLATE_NOOP("Updater", "Wasla %1 is available"), // desktop/app/src/updater.rs
-    QT_TRANSLATE_NOOP("Updater", "Wasla %1 is available."), // desktop/app/src/updater.rs
-    QT_TRANSLATE_NOOP("Updater", "Wasla is still on the version you had. Try again from Settings."), // desktop/app/src/updater.rs
-    QT_TRANSLATE_NOOP("Updater", "Wasla is up to date."), // desktop/app/src/updater.rs
-    QT_TRANSLATE_NOOP("Updater", "Wasla is updated to %1"), // desktop/app/src/updater.rs
     QT_TRANSLATE_NOOP("Updater", "Nightly %1"), // desktop/app/src/updater.rs
     QT_TRANSLATE_NOOP("Updater", "Nightly %1 (%2)"), // desktop/app/src/updater.rs
     QT_TRANSLATE_NOOP("Updater", "The download was damaged, so it wasn't installed. Try again."), // desktop/app/src/updater.rs
@@ -546,6 +541,11 @@ static const char *const wasla_rust_strings[] = {
     QT_TRANSLATE_NOOP("Updater", "The update didn't install"), // desktop/app/src/updater.rs
     QT_TRANSLATE_NOOP("Updater", "The update is installed. Restart Wasla to use it."), // desktop/app/src/updater.rs
     QT_TRANSLATE_NOOP("Updater", "Update now, or later from Settings."), // desktop/app/src/updater.rs
+    QT_TRANSLATE_NOOP("Updater", "Wasla %1 is available"), // desktop/app/src/updater.rs
+    QT_TRANSLATE_NOOP("Updater", "Wasla %1 is available."), // desktop/app/src/updater.rs
+    QT_TRANSLATE_NOOP("Updater", "Wasla is still on the version you had. Try again from Settings."), // desktop/app/src/updater.rs
+    QT_TRANSLATE_NOOP("Updater", "Wasla is up to date."), // desktop/app/src/updater.rs
+    QT_TRANSLATE_NOOP("Updater", "Wasla is updated to %1"), // desktop/app/src/updater.rs
     QT_TRANSLATE_NOOP("Updater", "Your phone reconnects on its own."), // desktop/app/src/updater.rs
     QT_TRANSLATE_NOOP("Webcam", "Starting camera on %1…"), // desktop/app/src/bridge/webcam.rs
     QT_TRANSLATE_NOOP("Webcam", "Streaming %1 × %2 · %3 fps from %4"), // desktop/app/src/bridge/webcam.rs

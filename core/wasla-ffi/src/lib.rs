@@ -9,12 +9,12 @@
 
 use std::{path::PathBuf, sync::Arc, time::Duration};
 
+use tokio::{runtime::Runtime, sync::broadcast::error::RecvError};
 use wasla_core as core;
 use wasla_core::{
     ConnectionPath, DeviceId, LinkState, Node, NodeConfig, NodeEvent, PairingEvent,
     features::{CapabilityMatrix, FeatureState},
 };
-use tokio::{runtime::Runtime, sync::broadcast::error::RecvError};
 
 uniffi::setup_scaffolding!();
 
@@ -1897,9 +1897,7 @@ impl From<core::Error> for WaslaError {
             core::Error::Network(reason) => WaslaError::Network { reason },
             core::Error::Storage(reason) => WaslaError::Storage { reason },
             core::Error::Io(e) => WaslaError::Storage { reason: e.to_string() },
-            core::Error::Protocol(reason) | core::Error::Internal(reason) => {
-                WaslaError::Internal { reason }
-            }
+            core::Error::Protocol(reason) | core::Error::Internal(reason) => WaslaError::Internal { reason },
         }
     }
 }
@@ -2384,9 +2382,7 @@ fn file_to_send(file: FileToSend) -> Result<core::OutgoingFile> {
         }
         #[cfg(not(unix))]
         FileToSend::Fd { .. } => {
-            return Err(WaslaError::Internal {
-                reason: "file descriptors exist only on Android".into(),
-            });
+            return Err(WaslaError::Internal { reason: "file descriptors exist only on Android".into() });
         }
     })
 }
@@ -4670,9 +4666,10 @@ impl WaslaNode {
         let mac_bytes = core::parse_mac(&mac)
             .ok_or_else(|| WaslaError::Internal { reason: "invalid MAC address".into() })?;
         let bcast = match broadcast.as_deref().map(str::trim).filter(|s| !s.is_empty()) {
-            Some(s) => Some(s.parse::<std::net::Ipv4Addr>().map_err(|_| WaslaError::Internal {
-                reason: "invalid broadcast IPv4 address".into(),
-            })?),
+            Some(s) => Some(
+                s.parse::<std::net::Ipv4Addr>()
+                    .map_err(|_| WaslaError::Internal { reason: "invalid broadcast IPv4 address".into() })?,
+            ),
             None => None,
         };
         let node = self.node.clone();

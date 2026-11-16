@@ -353,11 +353,7 @@ impl qobject::MediaList {
                 });
                 core_host::spawn(async move {
                     let _ = node
-                        .set_phone_toggle(
-                            device,
-                            "volume".into(),
-                            wasla_core::PhoneToggleValue::Level(level),
-                        )
+                        .set_phone_toggle(device, "volume".into(), wasla_core::PhoneToggleValue::Level(level))
                         .await;
                 });
             }

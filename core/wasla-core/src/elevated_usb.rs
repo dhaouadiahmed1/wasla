@@ -12,11 +12,11 @@
 
 use std::{net::SocketAddr, sync::Arc, time::Duration};
 
+use tokio::io::{AsyncBufReadExt, AsyncReadExt, BufReader};
 use wasla_protocol::{
     DeviceId, Envelope, ErrorCode,
     messages::{ElevatedUsbReady, ElevatedUsbStart, elevated, types},
 };
-use tokio::io::{AsyncBufReadExt, AsyncReadExt, BufReader};
 
 use crate::{
     error::{Error, Result},
