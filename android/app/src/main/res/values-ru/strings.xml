@@ -597,6 +597,7 @@
     <string name="error_unsupported">Приложение на ПК пока это не поддерживает.</string>
     <string name="error_generic">Что-то пошло не так.</string>
     <string name="settings_seed_honey">Мёд</string>
+    <string name="settings_seed_lagoon">Лагуна</string>
     <string name="settings_seed_lavender">Лаванда</string>
     <string name="settings_seed_ocean">Океан</string>
     <string name="settings_seed_sage">Шалфей</string>

@@ -621,6 +621,7 @@
 
     <!-- Theme seed names -->
     <string name="settings_seed_honey">Honig</string>
+    <string name="settings_seed_lagoon">Lagune</string>
     <string name="settings_seed_lavender">Lavendel</string>
     <string name="settings_seed_ocean">Ozean</string>
     <string name="settings_seed_sage">Salbei</string>

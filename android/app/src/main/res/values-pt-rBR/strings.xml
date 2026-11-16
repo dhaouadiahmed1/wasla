@@ -621,6 +621,7 @@
 
     <!-- Theme seed names -->
     <string name="settings_seed_honey">Mel</string>
+    <string name="settings_seed_lagoon">Lagoa</string>
     <string name="settings_seed_lavender">Lavanda</string>
     <string name="settings_seed_ocean">Oceano</string>
     <string name="settings_seed_sage">Sálvia</string>

@@ -585,6 +585,7 @@
     <string name="error_unsupported">电脑端应用尚不支持此操作。</string>
     <string name="error_generic">出了点问题。</string>
     <string name="settings_seed_honey">蜂蜜</string>
+    <string name="settings_seed_lagoon">潟湖</string>
     <string name="settings_seed_lavender">薰衣草</string>
     <string name="settings_seed_ocean">海洋</string>
     <string name="settings_seed_sage">鼠尾草</string>

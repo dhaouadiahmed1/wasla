@@ -621,6 +621,7 @@
 
     <!-- Theme seed names -->
     <string name="settings_seed_honey">Bal</string>
+    <string name="settings_seed_lagoon">Lagün</string>
     <string name="settings_seed_lavender">Lavanta</string>
     <string name="settings_seed_ocean">Okyanus</string>
     <string name="settings_seed_sage">Adaçayı</string>

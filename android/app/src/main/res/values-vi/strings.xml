@@ -608,6 +608,7 @@
 <string name="error_generic">Đã xảy ra lỗi.</string>
 <!-- Theme seed names -->
 <string name="settings_seed_honey">Honey</string>
+<string name="settings_seed_lagoon">Lagoon</string>
 <string name="settings_seed_lavender">Lavender</string>
 <string name="settings_seed_ocean">Ocean</string>
 <string name="settings_seed_sage">Sage</string>
